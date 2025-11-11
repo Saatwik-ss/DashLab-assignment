@@ -45,15 +45,20 @@ Since 2D matrices are flattned in GPU, this formula works.
 
 Switched order of x and y threads over rows and columns.
 
-
-<img width="934" height="468" alt="image" src="https://github.com/user-attachments/assets/280a4852-6ff4-471a-9e92-438938b5c27e" />
-
-
-Th einitial profiling was very poor and had certain issues inlcuding no kernels being profiled.
+<img width="1171" height="550" alt="image" src="https://github.com/user-attachments/assets/6bf0e174-ad33-48bf-a141-d38f93850379" />
 
 
+Just looking at the profiler, it seemed as the gflops were much higher than expected. The GFLOPS for CuBlas infact are around 410 for the same compute, putting my effeciency around 56%, indicating some issues in profiling.
 
+I then tested my kernel in kaggle and other machines too but the GFlops were around 230.
+
+### Bottleneck:
+
+The kernel shows a clear memory bandwidth bottleneck. About 68% of GPU time (≈9.17 ms) is spent inside matrixMulNaive, while global memory transfers (HtoD + DtoH) take another ~6 ms. Each thread performs N³ = 1024³ ≈ 1.07×10⁹ multiply-adds but also issues roughly 2×N³ = 2.1×10⁹ global memory reads/writes with almost no data reuse. The achieved throughput is ~230 GFLOPS, only around 55% of cuBLAS peak on a T4 GPU. The non-coalesced column access to matrix B and lack of shared-memory tiling make it heavily memory-bound rather than compute-bound.
+
+     
 ---
+
 
 
 
