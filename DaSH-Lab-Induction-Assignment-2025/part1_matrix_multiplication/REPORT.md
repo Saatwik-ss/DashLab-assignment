@@ -35,7 +35,11 @@ $$
 
 Since 2D matrices are flattned in GPU, this formula works.
 
+### Problems faced: 
+
+Switched order of x and y threads over rows and columns.
 
 
 ---
+
 
