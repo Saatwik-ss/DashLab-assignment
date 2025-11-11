@@ -1,5 +1,7 @@
 # Background:
-I have worked on modifying(not fully writing) CUDA kernels for SAiDL and have practiced some questions on LEETGPU, so i had some experience in reading and filling the code but not fully writing kernels from scratch.
+
+
+#### I have worked on modifying(not fully writing) CUDA kernels for SAiDL and have practiced some questions on LEETGPU, so i had some experience in reading and filling the code but not fully writing kernels from scratch.
 ---
 
 
@@ -58,6 +60,7 @@ The kernel shows a clear memory bandwidth bottleneck. About 68% of GPU time (≈
 
      
 ---
+
 
 
 
