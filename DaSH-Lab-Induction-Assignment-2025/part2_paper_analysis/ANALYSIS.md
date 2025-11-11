@@ -55,9 +55,9 @@ The issue becomes clearer when looking at how current systems work. In framework
 
 The paper shows this problem through measurements on a 13B parameter model running on an NVIDIA A100 GPU. The model weights take up around 65% of GPU memory, and the KV cache takes up about 30%. When the cache is managed poorly, actual usage drops to as low as 20–38% efficiency. Since model weights are fixed, this inefficiency in the cache becomes the main bottleneck. 
 
-The authors also point out that the problem becomes worse with longer sequences and advanced decoding methods like beam search or parallel sampling. In these cases, parts of the KV cache could be shared between different beams or samples, but existing systems treat each sequence separately and duplicate memory unnecessarily. This shows that not only is the memory fragmented, but opportunities for sharing are also lost.
+Its also talked that the problem becomes worse with longer sequences and advanced decoding methods like beam search or parallel sampling. In these cases, parts of the KV cache could be shared between different beams or samples, but existing systems treat each sequence separately and duplicate memory unnecessarily.
 
-These issues make serving large models very costly. Processing an LLM query is already around ten times more expensive than a traditional keyword search query. So improving throughput by fixing memory waste can have a major impact on both performance and cost. The motivating workloads in the paper include real serving traces from datasets like ShareGPT and Alpaca, which reflect realistic request lengths and variations. They were chosen specifically because they represent actual LLM usage patterns such as chat and instruction following.
+These issues make serving large models very costly. Processing an LLM query is already expensive. So improving throughput by fixing memory waste can have a major impact on both performance and cost. The motivating workloads in the paper include real serving traces from datasets like ShareGPT and Alpaca, which reflect realistic request lengths and variations. They were chosen specifically because they represent actual LLM usage patterns such as chat and instruction following.
 
 ---
 
@@ -147,3 +147,4 @@ What really clicked for me is how the authors saw the KV cache problem not as a 
 The architecture feels scalable and practical, though I do think implementing it from scratch would be extremely challenging because of the amount of coordination needed between CUDA kernels, memory allocators, and schedulers.
 
 Overall, vLLM feels like a bridge between deep learning and operating systems, it uses traditional system design principles to fix what is otherwise seen as a deep learning bottleneck. It’s one of those works where the elegance is in how simple the final idea is once you see it: break the KV cache into pages, allocate on demand, and stop wasting memory. Simple, but genius.
+
