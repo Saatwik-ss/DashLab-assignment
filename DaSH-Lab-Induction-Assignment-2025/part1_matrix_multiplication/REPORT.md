@@ -121,12 +121,15 @@ Global memory bandwidth usage is close to saturation.
 
 
 ### Effeciency:
-CuBlas testing showed it having around 420 FLOPS, which appears lesser than expected, however with that baseline, Tiled version acheives about: $90%$ effeciency as that of CuBlas which seems wrong. I'll however try to achieve actually realistic results with CuBlas and find better baseline. 
+CuBlas testing showed it having around 5640 FLOPS, with that baseline, Tiled version acheives about: $6.5%$ effeciency as that of CuBlas which seemed very less. 
+
+
+After trying more implementations i actually got it working around 700GFLOPS, achieving 12% efficiency of cuBLAS kernels.
 
 
 
 
-<img width="1748" height="949" alt="image" src="https://github.com/user-attachments/assets/37353431-1a5c-45ef-acaf-9feff7eb2a0c" />
+
 ---
 
 ## Register Blocking:
@@ -145,5 +148,10 @@ Instead of each thread computing a single $C[i][j]$, each thread now computes mu
 Just an added layer on Naive implementation with synchronisation of threads , this time the implementation actually went smoother.
 Since i was adding it on the Naive portion, using 2x2 4x4 tiles actually reduced the time and GFLOPS of the process, i was afraid to increase the load as 
 registers have low memory, but performance increased with TILE = 8, and decreased with TILE = 8.
+
+## Efficiency:
+Register blocking gives another clear jump. Threads compute multiple outputs at once, reusing values directly from registers, the fastest memory on the GPU.
+It achieves ~7.7% of cuBLAS, meaning nearly double the efficiency of the naive kernel, and is the first to approach a compute-dominated regime.
+
 
 
