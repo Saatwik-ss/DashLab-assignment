@@ -65,7 +65,7 @@ The kernel shows a clear memory bandwidth bottleneck. About 68% of GPU time (≈
 
 
 
-Tiled CUDA Matrix Multiplication  
+## Tiled CUDA Matrix Multiplication  
 1. Objective  
 After completing the naive version, the next logical step was to optimize memory usage by implementing the well known tilled matrix multiplication using shared memory. The goal was to reduce global memory accesses and exploit data reuse within each block. Tiles or small sub-blocks of matrices, instead of each thread being fetched from entire rows and columns from global memory,  are loaded into shared memory and reused by all threads in the block thus reducing load on bandwidth.
 
@@ -115,6 +115,7 @@ CuBlas testing showed it having around 420 FLOPS, which appears lesser than expe
 
 
 <img width="1748" height="949" alt="image" src="https://github.com/user-attachments/assets/37353431-1a5c-45ef-acaf-9feff7eb2a0c" />
+
 
 
 
