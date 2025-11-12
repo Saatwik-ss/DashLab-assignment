@@ -82,6 +82,7 @@ Within a block, what happens ?
 - Threads first load a T×T chunk of A and a T×T chunk of B into shared memory.  
 - Each thread then performs partial multiplication and accumulation on these tiles.  
 - After processing all tiles along the shared dimension (N), each thread writes its final computed value to the global memory.  
+Also used a fill function to populate the matrices rather than doing them in the main.
 
 Thread indexing remains similar as:  
 row = blockIdx.y × TILE + threadIdx.y  
@@ -90,7 +91,7 @@ col = blockIdx.x × TILE + threadIdx.x
 Using shared memory allows reuse of matrix elements by 16 threads in a block, reducing redundant global reads by nearly 16x. The synchronization barrier (`__syncthreads()`) ensures all threads finish loading data before computation begins on a tile.  
 
 Problems Faced:  
-The main challenge was the implementation, watched some youtube videos and some example implementations and tried to stray a bit further from prior implementations without getting errors.
+The main challenge was the implementation, watched some youtube videos and some example implementations and tried to stray a bit further from prior implementations without getting errors. The errors especially during testing of the code with a main function.
 
 Profiler & Performance:  
 Compared to the naive kernel (~9.3 ms, 230 GFLOPS), the tiled version runs in about 5.8 ms, achieving ~370 GFLOPS on a T4 GPU. That’s roughly a 1.6x speedup, primarily due to reduced global memory bandwidth pressure and increased data reuse. The shared-memory footprint per block was around 2×16×16×4 bytes = 2 KB, well within hardware limits.  
@@ -115,6 +116,7 @@ CuBlas testing showed it having around 420 FLOPS, which appears lesser than expe
 
 
 <img width="1748" height="949" alt="image" src="https://github.com/user-attachments/assets/37353431-1a5c-45ef-acaf-9feff7eb2a0c" />
+
 
 
 
