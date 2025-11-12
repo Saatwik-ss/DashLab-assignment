@@ -52,7 +52,9 @@ Switched order of x and y threads over rows and columns.
 
 Just looking at the profiler, it seemed as the gflops were much higher than expected. The GFLOPS for CuBlas infact are around 410 for the same compute, putting my effeciency around 56%, indicating some issues in profiling.
 
-I then tested my kernel in kaggle and other machines too but the GFlops were around 230.
+I then tested my kernel in kaggle and other machines too but the GFlops were constantly around 230.
+
+It was also noticed that usage of correct architecture gave number of FLOPS an increase as best result was 300 FLOPS in about 7 seconds.
 
 ### Bottleneck:
 
@@ -113,5 +115,6 @@ CuBlas testing showed it having around 420 FLOPS, which appears lesser than expe
 
 
 <img width="1748" height="949" alt="image" src="https://github.com/user-attachments/assets/37353431-1a5c-45ef-acaf-9feff7eb2a0c" />
+
 
 
